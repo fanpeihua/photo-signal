@@ -8,4 +8,5 @@ assert.ok(checker.laplacian>black.laplacian);assert.equal(checker.histogram.redu
 assert.throws(()=>measure(new Uint8Array(4),1,1));
 assert.throws(()=>measure(pixels(16,()=>5),16,16,200,100));
 assert.equal(measure(pixels(16,()=>10),16,16,20,240).dark,100);
+assert.equal(measure(pixels(16,()=>255),16,16,0,255).bright,100);
 console.log('PASS: image diagnostics distinguish clipping, flat areas and texture');

@@ -18,7 +18,7 @@ def check():
         with radar.connect(dbpath) as db:
             radar.store_item(db, item)
             radar.store_item(db, radar.normalize({**raw, 'metric': 20}, source, config))
-            private = radar.normalize({**raw, 'title': 'PRIVATE SECRET'}, {**source, 'id': 'private-feed', 'private': True}, config)
+            private = radar.normalize({**raw, 'title': 'PRIVATE CAMERA SECRET'}, {**source, 'id': 'private-feed', 'private': True}, config)
             radar.store_item(db, private)
             db.execute('DELETE FROM metrics')
             db.executemany('INSERT INTO metrics VALUES (?,?,?)', [(item['id'], '2026-09-01', 10), (item['id'], '2026-09-02', 20)])
@@ -33,7 +33,7 @@ def check():
         assert snap['sources'][0]['status'] == 'error' and snap['sources'][0]['last_success'] == '2026-09-01'
         radar.export_site(dbpath, Path(tmp) / 'site')
         path = Path(tmp) / 'site/snapshot.json'
-        assert 'PRIVATE SECRET' not in path.read_text()
+        assert 'PRIVATE CAMERA SECRET' not in path.read_text()
         restored = Path(tmp) / 'restored.sqlite'
         radar.restore_snapshot(path, restored)
         after = radar.snapshot(restored)
@@ -43,6 +43,11 @@ def check():
     topics, sentiment, _ = radar.classify('Paid portrait camera', '', config)
     assert 'AI 与计算摄影' not in topics and sentiment == '未判定'
     assert radar.classify('好用但是收费', '', config, 1)[1] == '负向'
+    assert not radar.relevant('Flock surveillance cameras', '', 'hn', config)
+    assert not radar.relevant('A social network for events', '', 'github', config)
+    assert radar.relevant('Image denoising using FFT', '', 'github', config)
+    assert radar.relevant('不好用', '', 'reviews', config)
+    assert '画质与评测' in radar.classify('Image denoising using FFT', '', config)[0]
     assert radar.date_value('not a date') is None
     for bad in ['javascript:alert(1)', 'file:///etc/passwd', 'https://user:pass@example.com']:
         try:

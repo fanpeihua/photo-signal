@@ -137,6 +137,17 @@ def classify(title, summary, config, rating=None):
     return topics or ['行业动态'], sentiment, basis
 
 
+def relevant(title, summary, kind, config):
+    """Known app reviews stay intact; broad search results must match photography context."""
+    if kind in ('reviews', 'release'):
+        return True
+    text = (title + ' ' + summary).casefold()
+    if any(contains(text, word) for word in config.get('exclude_keywords', [])):
+        return False
+    words = config['keywords'] + ['photos', 'images', 'cameras', 'photographer', 'photographers', 'imaging', 'denoising', 'raw', 'lightroom', 'darktable', 'composition', 'portrait', 'lens', 'lenses', 'exposure', 'fujifilm', 'canon', 'nikon']
+    return any(contains(text, word) for word in words)
+
+
 def normalize(raw, source, config):
     url = safe_url(raw['url'])
     title = clean(raw.get('title'), 220)
@@ -218,6 +229,9 @@ def collect(db_path=DB, local=False):
                     rows = job.result()
                     for r in rows:
                         try:
+                            if not relevant(clean(r.get('title')), clean(r.get('summary')), s['kind'], config):
+                                rejected += 1
+                                continue
                             item = normalize(r, s, config)
                         except (ValueError, KeyError, TypeError):
                             rejected += 1
@@ -227,7 +241,7 @@ def collect(db_path=DB, local=False):
                     if not count:
                         status, detail = 'empty', '请求成功，但没有有效条目；不代表没有讨论'
                     if rejected:
-                        detail += f' 丢弃 {rejected} 条不合法记录'
+                        detail += f' 过滤 {rejected} 条无关或不合法记录'
                 except Exception as exc:
                     status = 'error'
                     # Exception URLs can contain feed credentials: expose only type/status.
@@ -255,8 +269,9 @@ def snapshot(db_path=DB, local=False):
             last = db.execute('SELECT * FROM runs WHERE source_id=? ORDER BY at DESC,id DESC LIMIT 1', (s['id'],)).fetchone()
             success = db.execute("SELECT at FROM runs WHERE source_id=? AND status='ok' ORDER BY at DESC,id DESC LIMIT 1", (s['id'],)).fetchone()
             sources.append(dict(id=s['id'], name=s['name'], platform=s['platform'], kind=s['kind'], note=s.get('note', ''), search_url=s.get('search_url', ''), status=last['status'] if last else 'pending', checked_at=last['at'] if last else None, count=last['count'] if last else 0, detail=last['detail'] if last else '', last_success=success['at'] if success else None))
+        items = [i for i in items if relevant(i['title'], i['summary'], i['kind'], config)]
         for i in items:
-            i['topics'] = json.loads(i['topics'])
+            i['topics'], i['sentiment'], i['sentiment_basis'] = classify(i['title'], i['summary'], config, i['metric'] if i['kind'] == 'reviews' else None)
             ms = db.execute('SELECT day,value FROM metrics WHERE item_id=? ORDER BY day', (i['id'],)).fetchall()
             i['metric_history'] = [dict(m) for m in ms]
             i['metric_delta'] = ms[-1]['value'] - ms[0]['value'] if len(ms) >= 2 else None

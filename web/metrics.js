@@ -6,7 +6,7 @@
     const gray = new Float64Array(width * height), hist = Array(16).fill(0);
     let sum=0, dark=0, bright=0, red=0, blue=0;
     for (let i=0;i<gray.length;i++) {
-      const j=i*4, y=.2126*pixels[j]+.7152*pixels[j+1]+.0722*pixels[j+2];
+      const j=i*4, y=(2126*pixels[j]+7152*pixels[j+1]+722*pixels[j+2])/10000;
       gray[i]=y;sum+=y;dark+=y<=darkThreshold;bright+=y>=brightThreshold;red+=pixels[j];blue+=pixels[j+2];
       hist[Math.min(15,Math.floor(y/16))]++;
     }

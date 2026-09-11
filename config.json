@@ -1,11 +1,12 @@
 {
   "name": "取景 · Photo Signal",
   "keywords": ["图像", "图片", "拍摄", "摄影", "相机", "滤镜", "胶片", "CCD", "实况", "构图", "画质", "photography", "camera", "image", "photo", "film", "LUT"],
+  "exclude_keywords": ["surveillance", "cctv", "toothbrush", "flock cameras", "security camera", "监控摄像头"],
   "topics": {
     "胶片与风格": ["胶片", "复古", "滤镜", "ccd", "film", "vintage", "lut", "filter", "color grading", "analog"],
     "拍摄与构图": ["拍摄", "摄影", "构图", "姿势", "photography", "composition", "portrait", "capture", "camera", "lighting"],
     "AI 与计算摄影": ["ai", "diffusion", "generative", "neural", "computational", "生成", "智能", "分割"],
-    "画质与评测": ["画质", "清晰", "模糊", "噪点", "曝光", "quality", "blur", "sharp", "noise", "denois", "hdr", "exposure", "assessment", "iqa"],
+    "画质与评测": ["画质", "清晰", "模糊", "噪点", "曝光", "quality", "blur", "deblur", "sharp", "sharpness", "noise", "denoise", "denoising", "hdr", "exposure", "assessment", "iqa"],
     "实况与创作": ["实况", "拼贴", "拼图", "live photo", "motion", "collage", "video", "视频"],
     "用户体验与付费": ["付费", "会员", "订阅", "闪退", "广告", "崩溃", "收费", "subscription", "pay", "crash", "ads", "purchase", "bug"]
   },
