@@ -1,0 +1,32 @@
+{
+  "name": "取景 · Photo Signal",
+  "keywords": ["图像", "图片", "拍摄", "摄影", "相机", "滤镜", "胶片", "CCD", "实况", "构图", "画质", "photography", "camera", "image", "photo", "film", "LUT"],
+  "topics": {
+    "胶片与风格": ["胶片", "复古", "滤镜", "ccd", "film", "vintage", "lut", "filter", "color grading", "analog"],
+    "拍摄与构图": ["拍摄", "摄影", "构图", "姿势", "photography", "composition", "portrait", "capture", "camera", "lighting"],
+    "AI 与计算摄影": ["ai", "diffusion", "generative", "neural", "computational", "生成", "智能", "分割"],
+    "画质与评测": ["画质", "清晰", "模糊", "噪点", "曝光", "quality", "blur", "sharp", "noise", "denois", "hdr", "exposure", "assessment", "iqa"],
+    "实况与创作": ["实况", "拼贴", "拼图", "live photo", "motion", "collage", "video", "视频"],
+    "用户体验与付费": ["付费", "会员", "订阅", "闪退", "广告", "崩溃", "收费", "subscription", "pay", "crash", "ads", "purchase", "bug"]
+  },
+  "sources": [
+    {"id": "github-photo", "name": "GitHub · 拍摄与滤镜", "platform": "GitHub", "kind": "github", "query": "photography OR photo-filter OR computational-photography", "note": "公开仓库最近推送；星标变化须累积多次快照，不等同全站热榜"},
+    {"id": "github-quality", "name": "GitHub · 图像质量", "platform": "GitHub", "kind": "github", "query": "image-quality-assessment OR image-enhancement", "note": "公开仓库；按最近推送发现工程实践"},
+    {"id": "hn-photo", "name": "Hacker News · 摄影实践", "platform": "Hacker News", "kind": "hn", "query": "photography", "note": "公开故事索引；非全部评论"},
+    {"id": "hn-camera", "name": "Hacker News · 相机实践", "platform": "Hacker News", "kind": "hn", "query": "camera", "note": "公开故事索引；按发布时间"},
+    {"id": "dpreview", "name": "DPReview", "platform": "摄影媒体", "kind": "rss", "url": "https://www.dpreview.com/feeds/news.xml", "note": "公开 RSS；摄影资讯和器材实践，仅标题与原文链接"},
+    {"id": "fstoppers", "name": "Fstoppers", "platform": "摄影媒体", "kind": "rss", "url": "https://fstoppers.com/feed", "note": "公开 RSS；摄影技巧与效果实践，仅标题与原文链接"},
+    {"id": "petapixel", "name": "PetaPixel", "platform": "摄影媒体", "kind": "rss", "url": "https://petapixel.com/feed/", "note": "公开 RSS；仅标题与原文链接"},
+    {"id": "diyphoto", "name": "DIY Photography", "platform": "摄影媒体", "kind": "rss", "url": "https://www.diyphotography.net/feed/", "note": "公开 RSS；仅标题与原文链接"},
+    {"id": "arxiv", "name": "arXiv · 计算摄影与评测", "platform": "arXiv", "kind": "atom", "url": "https://export.arxiv.org/api/query?search_query=ti:%22image+quality%22+OR+ti:%22computational+photography%22&sortBy=submittedDate&sortOrder=descending&max_results=20", "note": "最新投稿，不代表已同行评审或可移动端落地；仅标题"},
+    {"id": "dazz-reviews", "name": "Dazz · 中国区最新评论", "platform": "App Store", "kind": "reviews", "app_id": "1422471180", "brand": "Dazz", "country": "cn", "note": "最近一页评论样本，非全部用户；评分作为情绪信号"},
+    {"id": "dazz-release", "name": "Dazz · 版本动态", "platform": "App Store", "kind": "release", "app_id": "1422471180", "brand": "Dazz", "country": "cn", "note": "官方商店版本元数据"},
+    {"id": "proccd-reviews", "name": "ProCCD · 中国区最新评论", "platform": "App Store", "kind": "reviews", "app_id": "1616113199", "brand": "ProCCD", "country": "cn", "note": "最近一页评论样本，非全部用户"},
+    {"id": "proccd-release", "name": "ProCCD · 版本动态", "platform": "App Store", "kind": "release", "app_id": "1616113199", "brand": "ProCCD", "country": "cn", "note": "官方商店版本元数据"},
+    {"id": "kapi-reviews", "name": "Kapi · 中国区最新评论", "platform": "App Store", "kind": "reviews", "app_id": "1602677577", "brand": "Kapi", "country": "cn", "note": "iOS 中国区评论样本，不代表 Android 或全体用户"},
+    {"id": "kapi-release", "name": "Kapi · 版本动态", "platform": "App Store", "kind": "release", "app_id": "1602677577", "brand": "Kapi", "country": "cn", "note": "官方商店版本元数据"},
+    {"id": "xiaohongshu", "name": "小红书", "platform": "小红书", "kind": "connection", "search_url": "https://www.xiaohongshu.com/search_result?keyword=%E6%91%84%E5%BD%B1", "note": "未接通自动采集。可添加你有权使用的 RSS/Atom 来源，或在网站录入原帖链接与观察。"},
+    {"id": "x", "name": "X", "platform": "X", "kind": "connection", "search_url": "https://x.com/search?q=photography%20filter&f=live", "note": "官方搜索按量收费，零预算默认不调用；可接授权 RSS，或录入原帖。"},
+    {"id": "douyin", "name": "抖音", "platform": "抖音", "kind": "connection", "search_url": "https://www.douyin.com/search/%E6%91%84%E5%BD%B1", "note": "关键词搜索 API 需要平台权限；可接授权 RSS，或录入原帖。"}
+  ]
+}

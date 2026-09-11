@@ -1,0 +1,19 @@
+{
+  "name": "Kapi",
+  "checked_at": "2026-09-12",
+  "scope": "公开 App Store 描述，仅证明公开宣传的 iOS 能力；Android 与成片效果需单独验证。",
+  "capabilities": {
+    "胶片与风格": "公开描述包含 DV、CCD、胶片滤镜和实时预览；不同光线下的风格一致性尚需实测。",
+    "拍摄与构图": "公开描述支持拍摄与实时预览；构图辅助效果尚需实测。",
+    "AI 与计算摄影": "本次公开描述不足以确认能力边界，需补充版本和实测。",
+    "画质与评测": "公开描述不足以确认自动画质评估能力，需检查实际版本。",
+    "实况与创作": "公开描述包含照片、视频；实况兼容与拼贴深度需核验。",
+    "用户体验与付费": "用本系统的最新公开评论样本发现问题，再在目标版本复现。"
+  },
+  "evidence": "https://apps.apple.com/cn/app/id1602677577",
+  "competitors": [
+    {"name": "Kapi", "url": "https://apps.apple.com/cn/app/id1602677577", "observation": "DV、CCD、胶片效果与实时预览", "next": "验证风格效果、预览与成片一致性"},
+    {"name": "Dazz", "url": "https://apps.apple.com/cn/app/id1422471180", "observation": "多种胶片规格、数码色彩与复古视频；部分相机支持底片重调", "next": "同场景比较重调能力与风格保真"},
+    {"name": "ProCCD", "url": "https://apps.apple.com/cn/app/id1616113199", "observation": "CCD 模拟、一次成像效果与跨屏拼贴", "next": "比较多图创作步骤与导出质量"}
+  ]
+}

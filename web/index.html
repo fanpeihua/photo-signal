@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light"><meta name="description" content="摄影趋势、竞品声音与效果实践，汇聚成可验证的产品方向。">
+  <title>取景 · Photo Signal</title><link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <aside class="sidebar">
+    <a class="brand" href="#overview"><span class="mark">◉</span><span>取景<small>PHOTO SIGNAL</small></span></a>
+    <p class="eyebrow">PHOTOGRAPHY INTELLIGENCE</p>
+    <nav aria-label="主导航">
+      <a href="#overview"><span>01</span>今日视野</a><a href="#signals"><span>02</span>信号资料库</a>
+      <a href="#gaps"><span>03</span>方向与差距</a><a href="#lab"><span>04</span>实践评测室</a><a href="#sources"><span>05</span>来源与覆盖</a>
+    </nav>
+    <div class="sidebar-bottom"><span class="live-dot"></span> 持续观察，而后判断<p>从一次发现<br>到一次更好的拍摄。</p><small>公开信息 · 零付费接口</small></div>
+  </aside>
+  <main>
+    <header><span id="today"></span><div><span id="mode" class="pill"></span><button id="refresh" type="button">↻ 刷新数据</button></div></header>
+    <div id="notice" class="notice" role="status" aria-live="polite">正在读取最新采集…</div>
+    <div id="app"></div>
+    <footer><span>PHOTO SIGNAL / 取景</span><span>结论可追溯，缺口可见。<a href="https://github.com/fanpeihua/photo-signal" target="_blank" rel="noopener noreferrer">源码与运行说明 ↗</a></span></footer>
+  </main>
+  <dialog id="import-dialog"><form id="import-form"><h2>留下一条观察</h2><p>仅保存到此浏览器，可导出备份。原文链接用于追溯。</p>
+    <label>平台<select name="platform"><option>小红书</option><option>X</option><option>抖音</option><option>GitHub</option><option>摄影媒体</option><option>其他</option></select></label>
+    <label>原文链接<input name="url" type="url" required placeholder="https://…"></label>
+    <label>标题<input name="title" required maxlength="220"></label><label>你的观察<textarea name="summary" maxlength="800" required placeholder="效果如何实现？用户在肯定或抱怨什么？"></textarea></label>
+    <label>原帖发布日期（可留空）<input name="published_at" type="date"></label>
+    <div class="actions"><button type="button" id="close-import">取消</button><button class="primary">保存观察</button></div>
+  </form></dialog>
+  <script src="metrics.js"></script><script src="app.js"></script>
+</body></html>

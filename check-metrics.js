@@ -1,0 +1,11 @@
+const assert=require('node:assert/strict');
+const {measure}=require('./web/metrics.js');
+const pixels=(n,fn)=>Uint8ClampedArray.from({length:n*n*4},(_,i)=>i%4===3?255:fn(Math.floor(i/4)%n,Math.floor(i/4/n)));
+const black=measure(pixels(16,()=>0),16,16),white=measure(pixels(16,()=>255),16,16),checker=measure(pixels(16,(x,y)=>(x+y)%2?255:0),16,16);
+assert.equal(black.luma,0);assert.equal(black.dark,100);assert.equal(black.bright,0);assert.equal(black.laplacian,0);
+assert.ok(Math.abs(white.luma-255)<1e-8);assert.equal(white.bright,100);assert.equal(white.dark,0);
+assert.ok(checker.laplacian>black.laplacian);assert.equal(checker.histogram.reduce((a,b)=>a+b,0),256);
+assert.throws(()=>measure(new Uint8Array(4),1,1));
+assert.throws(()=>measure(pixels(16,()=>5),16,16,200,100));
+assert.equal(measure(pixels(16,()=>10),16,16,20,240).dark,100);
+console.log('PASS: image diagnostics distinguish clipping, flat areas and texture');

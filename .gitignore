@@ -1,0 +1,8 @@
+__pycache__/
+data/*.sqlite*
+data/local*.json
+data/*.lock
+dist/
+artifacts/
+.DS_Store
+node_modules/
