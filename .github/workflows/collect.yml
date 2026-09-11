@@ -4,7 +4,7 @@ on:
     - cron: '17 */2 * * *'
   workflow_dispatch:
   push:
-    branches: [main]
+    branches: [site/photo-signal]
     paths-ignore: ['data/public-snapshot.json']
 permissions:
   contents: write
@@ -45,7 +45,7 @@ jobs:
             git config user.name 'github-actions[bot]'
             git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
             git commit -m 'data: refresh public photography signals'
-            git push origin HEAD:main
+            git push origin "HEAD:${GITHUB_REF_NAME}"
           fi
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
