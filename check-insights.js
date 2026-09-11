@@ -1,0 +1,13 @@
+const assert=require('node:assert/strict'),{build}=require('./web/insights.js');
+const asOf='2026-09-12T00:00:00Z';
+const review=(id,extra={})=>({id,brand:'Kapi',platform:'App Store',kind:'reviews',metric_name:'rating',metric:1,published_at:'2026-09-10T00:00:00Z',title:'收费提示不清楚',summary:'',url:'https://example.com/'+id,...extra});
+const rows=[review('a'),review('b'),review('c',{metric:5}),review('d',{brand:'Dazz'}),review('e',{title:'闪退'}),review('a'),review('future',{published_at:'2026-09-13'}),review('unknown',{published_at:null}),review('old',{published_at:'2026-08-01'}),review('manual',{kind:'manual'}),review('invalid',{metric:0})];
+const report=build(rows,asOf),kapi=report.brands[0],candidate=report.candidates[0];
+assert.deepEqual([kapi.count,kapi.negative,kapi.week.count,kapi.comparable],[4,3,4,false]);
+assert.equal(report.candidates.length,1);assert.equal(candidate.id,'Kapi-payment');
+assert.equal(candidate.count,2);assert.equal(candidate.total,4);assert.deepEqual(candidate.evidence.map(i=>i.id),['a','b']);
+assert.equal(build([],asOf).candidates.length,0);assert.throws(()=>build([],'bad date'));
+const periods=Array.from({length:10},(_,i)=>review('week'+i,{metric:i%2?5:1})).concat(Array.from({length:10},(_,i)=>review('previous'+i,{published_at:'2026-09-03T00:00:00Z',metric:5})));
+const comparison=build(periods,asOf).brands[0];assert.equal(comparison.comparable,true);assert.deepEqual(comparison.week,{count:10,negative:5});assert.deepEqual(comparison.previous,{count:10,negative:0});
+assert.equal(build([review('a',{published_at:'2026-09-05T00:00:00Z'})],asOf).brands[0].previous.count,1);
+console.log('PASS: evidence candidates deduplicate, isolate brands, exclude invalid dates and require sample denominators');
