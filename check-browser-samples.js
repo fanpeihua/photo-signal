@@ -1,0 +1,10 @@
+const assert=require('node:assert/strict'),{merge}=require('./web/browser-samples.js');
+const clock=Date.parse('2026-09-12T02:00:00Z'),row={title:'Kapi 胶片滤镜',url:'https://www.xiaohongshu.com/search_result/6a60947c0000000001033c41?xsec_token=do-not-save',date_label:'07-22',likes_label:'1.2万',query:'咔皮相机'},batch={version:1,captured_at:'2026-09-12T01:00:00Z',rows:[row,row]};
+const rules={'胶片与风格':['胶片','film'],'AI 与计算摄影':['AI']};
+const first=merge([],batch,rules,clock);assert.equal(first.length,1);assert.equal(first[0].published_at,null);assert.equal(first[0].brand,'Kapi');assert.equal(first[0].sentiment,'未判定');assert.equal(first[0].metric,null);assert.ok(!first[0].url.includes('token'));assert.deepEqual(first[0].topics,['胶片与风格']);
+const second=merge(first,{...batch,captured_at:'2026-09-12T01:30:00Z',rows:[{...row,likes_label:'1.3万'}]},rules,clock);assert.equal(second[0].first_seen,first[0].first_seen);assert.notEqual(second[0].last_seen,first[0].last_seen);assert.deepEqual(merge(second,batch,rules,clock),second);
+assert.throws(()=>merge([],{...batch,rows:[{...row,url:'https://evil.example/note'}]},rules,clock));assert.throws(()=>merge([],{...batch,captured_at:'2027-01-01'},rules,clock));
+assert.equal(merge([],{...batch,rows:[{...row,date_label:'2025-12-31'}]},rules,clock)[0].published_at,'2025-12-31T00:00:00+08:00');
+assert.equal(merge([],{...batch,rows:[{...row,date_label:'2026-02-30'}]},rules,clock)[0].published_at,null);
+assert.equal(merge([],{...batch,rows:[{...row,title:'paid portrait'}]},rules,clock)[0].topics[0],'行业动态');
+console.log('PASS: browser imports strip access signatures, preserve first-seen, reject unsafe input and keep sentiment/dates honest');

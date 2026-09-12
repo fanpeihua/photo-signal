@@ -27,6 +27,7 @@ jobs:
           python3 check.py
           node check-metrics.js
           node check-insights.js
+          node check-browser-samples.js
           node --check web/app.js
       - name: Restore durable history
         run: |

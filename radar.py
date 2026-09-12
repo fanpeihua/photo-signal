@@ -275,7 +275,7 @@ def snapshot(db_path=DB, local=False):
             ms = db.execute('SELECT day,value FROM metrics WHERE item_id=? ORDER BY day', (i['id'],)).fetchall()
             i['metric_history'] = [dict(m) for m in ms]
             i['metric_delta'] = ms[-1]['value'] - ms[0]['value'] if len(ms) >= 2 else None
-    return dict(generated_at=now(), mode='local' if local else 'public', keywords=config['keywords'], topics=list(config['topics']), items=items, sources=sources)
+    return dict(generated_at=now(), mode='local' if local else 'public', keywords=config['keywords'], topics=list(config['topics']), topic_keywords=config['topics'], items=items, sources=sources)
 
 
 def export_site(db_path=DB, output=None):
